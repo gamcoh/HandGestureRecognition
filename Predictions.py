@@ -14,16 +14,16 @@ class Prediction():
 		pred = self.model.predict(x)
 		
 		labels = {
-			"action1": 0,
-			"action2": 1,
-			"action3": 2,
-			"action4": 3,
-			"action5": 4,
-			"action6": 5,
-			"actionAmplifier1": 6,
-			"actionAmplifier2": 7,
-			"actionAmplifier3": 8,
-			"actionAmplifier4": 9
+			"action1": 0, # thumb touching index
+			"action2": 1, # index up
+			"action3": 2, # index down
+			"action4": 3, # thumb up
+			"action5": 4, # fist
+			"action6": 5, # thumb down
+			"actionAmplifier1": 6, # 2 fingers
+			"actionAmplifier2": 7, # 3 fingers
+			"actionAmplifier3": 8, # 4 fingers
+			"actionAmplifier4": 9 # 5 fingers
 		}
 		labels = {value:key for key, value in labels.items()}
 		return labels[np.argmax(pred)]
