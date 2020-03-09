@@ -10,7 +10,6 @@ actions = ['action1', 'action2', 'action3', 'action4', 'action5', 'action6', 'ac
 i = 0
 for action in actions:
 	while(True):
-		sleep(0.09)
 		i += 1
 		# Capture frame-by-frame
 		ret, frame = cap.read()
