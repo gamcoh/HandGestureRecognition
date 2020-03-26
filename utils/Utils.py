@@ -9,7 +9,9 @@ def get_generators(target_size: tuple = (135, 180), batch_size: int = 32) -> tup
 	return train_generator, val_generator, test_generator, imagetest_generator
 
 def scheduler(epoch):
-	if epoch < 200:
-		return .00001
-	
-	return .000001
+    if epoch < 200:
+        return .001
+    if epoch < 400:
+        return .0005
+
+    return .0001

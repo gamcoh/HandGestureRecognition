@@ -13,7 +13,4 @@ def test_model(target_size: tuple, batch_size: int = 64, model_name: str = 'nehi
 	print(model.evaluate_generator(test_generator))
 	
 
-test_model(target_size=(135, 180), batch_size=128, model_name='nehi')
-test_model(target_size=(189, 252), batch_size=64, model_name='perla')
-test_model(target_size=(135, 180), batch_size=64, model_name='shlomo')
-test_model(target_size=(135, 180), batch_size=32, model_name='vgg16_5')
+test_model(target_size=(135, 180), batch_size=252, model_name='nehi_3th_gen')

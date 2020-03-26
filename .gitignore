@@ -8,3 +8,4 @@ image2labellize
 checkpoints
 image_test
 logs
+nohup.out
