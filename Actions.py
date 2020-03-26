@@ -4,7 +4,7 @@ from alsaaudio import Mixer
 from pykeyboard import PyKeyboard
 
 
-class Actions():
+class Actions:
 	def __init__(self):
 		self.amplifier = 1
 
@@ -38,10 +38,10 @@ class Actions():
 
 	def action2(self):
 		sound = Mixer()
-		vol = sound.getvolume()[0] # we can take either 0 or 1 it does not matter
+		vol = sound.getvolume()[0] # we can take either 0 or 1 from what I gathered, it does not matter
 		vol += self.step * self.amplifier
 		self.amplifier = 1 # reset the amplifier
-		# sound.setvolume(vol)
+		sound.setvolume(vol)
 		os.system('notify-send "Volume up to %s"' % vol)
 
 
@@ -50,7 +50,7 @@ class Actions():
 		vol = sound.getvolume()[0] # we can take either 0 or 1 it does not matter
 		vol -= self.step * self.amplifier
 		self.amplifier = 1 # reset the amplifier
-		# sound.setvolume(vol)
+		sound.setvolume(vol)
 		os.system('notify-send "Volume down to %s"' % vol)
 
 
