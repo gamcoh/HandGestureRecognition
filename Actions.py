@@ -41,8 +41,11 @@ class Actions:
 		vol = sound.getvolume()[0] # we can take either 0 or 1 from what I gathered, it does not matter
 		vol += self.step * self.amplifier
 		self.amplifier = 1 # reset the amplifier
-		sound.setvolume(vol)
-		os.system('notify-send "Volume up to %s"' % vol)
+		try:
+			sound.setvolume(vol)
+			os.system('notify-send "Volume up to %s"' % vol)
+		except Exception:
+			os.system('notify-send "Volume is already up to it\'s maximum"')
 
 
 	def action3(self):

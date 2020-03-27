@@ -34,7 +34,5 @@ class Prediction():
 		x = x.reshape(1, 135, 180, 3)
 		pred = self.model.predict(x)
 		
-		print(pred, np.argmax(pred), self.labels[np.argmax(pred)])
-
 		return self.labels[np.argmax(pred)]
 

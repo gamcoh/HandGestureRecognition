@@ -1,4 +1,6 @@
+from collections import Counter
 from tensorflow import keras
+from time import time
 
 def get_generators(target_size: tuple = (135, 180), batch_size: int = 32) -> tuple:
 	train_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
@@ -15,3 +17,52 @@ def scheduler(epoch):
         return .0005
 
     return .0001
+
+
+def top_k(l: list, k=2) -> list:
+    """The counter.most_common([k]) method works
+    in the following way:
+    >>> Counter('abracadabra').most_common(3)  
+    [('a', 5), ('r', 2), ('b', 2)]
+    """
+
+    c = Counter(l)
+    return [key for key, val in c.most_common(k)]
+
+
+def hasAmplifier(l: list) -> tuple:
+	"""Search for an element that has amplifier in it's name
+	
+	Arguments:
+		l {list} -- elements haystakck
+	
+	Returns:
+		tuple -- amplifierFounded => bool, ordered actions => list
+	"""	
+	ret = []
+	amplifierFounded = False
+	for el in l:
+		if 'actionAmplifier' in el:
+			ret.insert(0, el)
+			amplifierFounded = True
+		else:
+			ret.append(el)
+
+	return amplifierFounded, ret
+
+def getFrames(cam, s=5):
+	"""Get all the frames of the cam capture within the number of seconds given
+	
+	Arguments:
+		cam {VideoCapture} -- the camera that captures the video
+	
+	Keyword Arguments:
+		s {int} -- The number of seconds (default: {5})
+	
+	Yields:
+		generator -- every frame
+	"""	
+	start = time()
+	while (time() - start) < s: # take frames for S seconds
+		ret, frame = cam.read()
+		yield frame
