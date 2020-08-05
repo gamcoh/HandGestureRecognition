@@ -1,6 +1,5 @@
 coverage
 .vscode
-images
 images_test
 __pycache__
 handrecognition_model.h5

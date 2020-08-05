@@ -5,7 +5,7 @@ from random import randint
 
 cap = cv2.VideoCapture(0)
 
-actions = ['action1', 'action2', 'action3', 'action4', 'action5', 'action6', 'actionAmplifier1', 'actionAmplifier2', 'actionAmplifier3', 'actionAmplifier4']
+actions = ['action1', 'action2', 'action3', 'action4', 'action5', 'action6', 'actionAmplifier1', 'actionAmplifier2', 'actionAmplifier3', 'actionAmplifier4', 'other']
 
 i = 0
 for action in actions:
