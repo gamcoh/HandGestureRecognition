@@ -7,7 +7,7 @@ from tensorflow import keras
 train_generator, val_generator, test_generator, imagetest_generator = Utils.get_generators(target_size=(135, 180), batch_size=32)
 
 model = keras.models.Sequential()
-model.add(keras.layers.Conv2D(18, (3, 3), activation='relu', input_shape=(135, 180, 3))) 
+model.add(keras.layers.Conv2D(18, (3, 3), activation='relu', input_shape=(135, 180, 3)))
 model.add(keras.layers.MaxPooling2D((2, 2)))
 model.add(keras.layers.Conv2D(18, (3, 3), activation='relu')) 
 model.add(keras.layers.MaxPooling2D((2, 2)))
@@ -49,18 +49,18 @@ import matplotlib.pyplot as plt
 test_loss, test_acc = model.evaluate_generator(imagetest_generator)
 i = 0
 for batches in imagetest_generator:
-	for y in range(len(batches[0])):
-		image = batches[0][y]
-		label = batches[1][y]
-		pred = model.predict(image.reshape(1, 135, 180, 3))
-		color = 'green' if np.argmax(label) == np.argmax(pred) else 'red'
-		plt.figure()
-		plt.imshow(image)
-		plt.text(10, 10, f"label: {np.argmax(label)}", bbox=dict(fill=True, edgecolor=color, linewidth=2))
-		plt.text(10, 25, f"pred: {np.argmax(pred)}", bbox=dict(fill=True, edgecolor=color, linewidth=2))
-		plt.show()
-	break
-	if i == 10:
-		break
-	i += 1
+    for y in range(len(batches[0])):
+        image = batches[0][y]
+        label = batches[1][y]
+        pred = model.predict(image.reshape(1, 135, 180, 3))
+        color = 'green' if np.argmax(label) == np.argmax(pred) else 'red'
+        plt.figure()
+        plt.imshow(image)
+        plt.text(10, 10, f"label: {np.argmax(label)}", bbox=dict(fill=True, edgecolor=color, linewidth=2))
+        plt.text(10, 25, f"pred: {np.argmax(pred)}", bbox=dict(fill=True, edgecolor=color, linewidth=2))
+        plt.show()
+    break
+    if i == 10:
+        break
+    i += 1
 

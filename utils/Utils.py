@@ -1,14 +1,16 @@
 from collections import Counter
-from tensorflow import keras
 from time import time
 
+from tensorflow import keras
+
+
 def get_generators(target_size: tuple = (135, 180), batch_size: int = 32) -> tuple:
-	train_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
-	train_generator = train_datagen.flow_from_directory('images/train', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
-	val_generator = train_datagen.flow_from_directory('images/val', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
-	test_generator = train_datagen.flow_from_directory('images/test', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
-	imagetest_generator = train_datagen.flow_from_directory('image_test', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
-	return train_generator, val_generator, test_generator, imagetest_generator
+    train_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
+    train_generator = train_datagen.flow_from_directory('images/train', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
+    val_generator = train_datagen.flow_from_directory('images/val', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
+    test_generator = train_datagen.flow_from_directory('images/test', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
+    imagetest_generator = train_datagen.flow_from_directory('image_test', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
+    return train_generator, val_generator, test_generator, imagetest_generator
 
 def scheduler(epoch):
     if epoch < 200:
@@ -31,38 +33,38 @@ def top_k(l: list, k=2) -> list:
 
 
 def hasAmplifier(l: list) -> tuple:
-	"""Search for an element that has amplifier in it's name
-	
-	Arguments:
-		l {list} -- elements haystakck
-	
-	Returns:
-		tuple -- amplifierFounded => bool, ordered actions => list
-	"""	
-	ret = []
-	amplifierFounded = False
-	for el in l:
-		if 'actionAmplifier' in el:
-			ret.insert(0, el)
-			amplifierFounded = True
-		else:
-			ret.append(el)
+    """Search for an element that has amplifier in it's name
 
-	return amplifierFounded, ret
+    Arguments:
+        l {list} -- elements haystakck
+
+    Returns:
+        tuple -- amplifierFounded => bool, ordered actions => list
+    """
+    ret = []
+    amplifier_found = False
+    for element in l:
+        if 'actionAmplifier' in element:
+            ret.insert(0, element)
+            amplifier_found = True
+        else:
+            ret.append(element)
+
+    return amplifier_found, ret
 
 def getFrames(cam, s=5):
-	"""Get all the frames of the cam capture within the number of seconds given
-	
-	Arguments:
-		cam {VideoCapture} -- the camera that captures the video
-	
-	Keyword Arguments:
-		s {int} -- The number of seconds (default: {5})
-	
-	Yields:
-		generator -- every frame
-	"""	
-	start = time()
-	while (time() - start) < s: # take frames for S seconds
-		ret, frame = cam.read()
-		yield frame
+    """Get all the frames of the cam capture within the number of seconds given
+
+    Arguments:
+        cam {VideoCapture} -- the camera that captures the video
+
+    Keyword Arguments:
+        s {int} -- The number of seconds (default: {5})
+
+    Yields:
+        generator -- every frame
+    """
+    start = time()
+    while (time() - start) < s: # take frames for S seconds
+        _, frame = cam.read()
+        yield frame

@@ -1,29 +1,44 @@
-import numpy as np
-import cv2
-from time import sleep
 from random import randint
+from time import sleep
+
+import cv2
+
+ACTIONS = [
+    'action1',
+    'action2',
+    'action3',
+    'action4',
+    'action5',
+    'action6',
+    'actionAmplifier1',
+    'actionAmplifier2',
+    'actionAmplifier3',
+    'actionAmplifier4',
+    'other'
+]
 
 cap = cv2.VideoCapture(0)
 
-actions = ['action1', 'action2', 'action3', 'action4', 'action5', 'action6', 'actionAmplifier1', 'actionAmplifier2', 'actionAmplifier3', 'actionAmplifier4', 'other']
-
 i = 0
-for action in actions:
-	while(True):
-		i += 1
-		# Capture frame-by-frame
-		ret, frame = cap.read()
-		# do what you want with frame
-		#  and then save to file
-		cv2.imwrite('./image2labellize/' + action + '/' + str(i) + '_' + str(randint(0, 1000)) + '_opencv.png', frame)
+for action in ACTIONS:
+    while True:
+        i += 1
+        # Capture frame-by-frame
+        ret, frame = cap.read()
+        # save the image to a file in the right folder
+        FILENAME = './image2labellize/'+action+'/'+str(i)+'_'+str(randint(0, 1000))+'_opencv.png'
+        cv2.imwrite(FILENAME, frame)
 
-		cv2.imshow(action, frame.copy())
+        img = frame.copy()
+        cv2.putText(img, action, (10, 10), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2, cv2.LINE_AA)
+        cv2.imshow(action, img)
 
-		keypress = cv2.waitKey(1) & 0xFF
-		if keypress == ord("q"):
-			cv2.destroyAllWindows()
-			break
-	sleep(1)
+        keypress = cv2.waitKey(1) & 0xFF
+        if keypress == ord("q"):
+            cv2.destroyAllWindows()
+            break
+        sleep(1)
+    sleep(2)
 
 # When everything done, release the capture
 cap.release()
