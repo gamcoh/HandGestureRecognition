@@ -1,14 +1,14 @@
-import pandas as pd
-import numpy as np
+import sys
+sys.path.append('../utils')
 
-from utils import Utils
+from Utils import *
 
 from tensorflow.keras.applications import VGG16
-from tensorflow.keras.models import models
+from tensorflow.keras.models import Model
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
-train_generator, val_generator, test_generator = Utils.get_generators(target_size=(135, 180), batch_size=32)
+train_generator, val_generator, test_generator = get_generators(target_size=(135, 180), batch_size=32)
 
 vgg16 = VGG16(include_top=False, weights="imagenet", input_shape=(135, 180, 3))
 
@@ -17,7 +17,7 @@ for layer in vgg16.layers:
 
 x = GlobalAveragePooling2D()(vgg16.output)
 x = Dense(256, activation='relu')(x)
-x = Dense(10, activation='softmax')(x)
+x = Dense(11, activation='softmax')(x)
 
 model = Model(inputs=vgg16.input, outputs=x)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
