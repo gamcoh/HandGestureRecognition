@@ -4,7 +4,7 @@ import numpy as np
 
 class Prediction():
 	def __init__(self):
-		self.model = load_model('./nehi_2th_gen.h5')
+		self.model = load_model('./vgg16_freeze_256_img_135.h5')
 		self.labels = [
 			"action1",
 			"action2",
@@ -16,6 +16,7 @@ class Prediction():
 			"actionAmplifier2",
 			"actionAmplifier3",
 			"actionAmplifier4",
+			"other"
 		]
 
 

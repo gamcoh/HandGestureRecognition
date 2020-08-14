@@ -3,67 +3,70 @@ from time import time
 
 from tensorflow import keras
 
+class Utils:
+    @staticmethod
+    def get_generators(target_size: tuple = (135, 180), batch_size: int = 32) -> tuple:
+        train_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
+        train_generator = train_datagen.flow_from_directory('../images/output/train', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
+        val_generator = train_datagen.flow_from_directory('../images/output/val', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
+        test_generator = train_datagen.flow_from_directory('../images/output/test', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
+        return train_generator, val_generator, test_generator
 
-def get_generators(target_size: tuple = (135, 180), batch_size: int = 32) -> tuple:
-    train_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
-    train_generator = train_datagen.flow_from_directory('../images/output/train', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
-    val_generator = train_datagen.flow_from_directory('../images/output/val', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
-    test_generator = train_datagen.flow_from_directory('../images/output/test', target_size=target_size, batch_size=batch_size, class_mode='categorical', color_mode='rgb', shuffle=True)
-    return train_generator, val_generator, test_generator
+    @staticmethod
+    def scheduler(epoch):
+        if epoch < 200:
+            return .001
+        if epoch < 400:
+            return .0005
 
-def scheduler(epoch):
-    if epoch < 200:
-        return .001
-    if epoch < 400:
-        return .0005
+        return .0001
 
-    return .0001
+    @staticmethod
+    def top_k(l: list, k=2) -> list:
+        """The counter.most_common([k]) method works
+        in the following way:
+        >>> Counter('abracadabra').most_common(3)  
+        [('a', 5), ('r', 2), ('b', 2)]
+        """
 
+        c = Counter(l)
+        return [key for key, val in c.most_common(k)]
 
-def top_k(l: list, k=2) -> list:
-    """The counter.most_common([k]) method works
-    in the following way:
-    >>> Counter('abracadabra').most_common(3)  
-    [('a', 5), ('r', 2), ('b', 2)]
-    """
+    @staticmethod
+    def hasAmplifier(l: list) -> tuple:
+        """Search for an element that has amplifier in it's name
 
-    c = Counter(l)
-    return [key for key, val in c.most_common(k)]
+        Arguments:
+            l {list} -- elements haystakck
 
+        Returns:
+            tuple -- amplifierFounded => bool, ordered actions => list
+        """
+        ret = []
+        amplifier_found = False
+        for element in l:
+            if 'actionAmplifier' in element:
+                ret.insert(0, element)
+                amplifier_found = True
+            else:
+                ret.append(element)
 
-def hasAmplifier(l: list) -> tuple:
-    """Search for an element that has amplifier in it's name
+        return amplifier_found, ret
 
-    Arguments:
-        l {list} -- elements haystakck
+    @staticmethod
+    def getFrames(cam, s=5):
+        """Get all the frames of the cam capture within the number of seconds given
 
-    Returns:
-        tuple -- amplifierFounded => bool, ordered actions => list
-    """
-    ret = []
-    amplifier_found = False
-    for element in l:
-        if 'actionAmplifier' in element:
-            ret.insert(0, element)
-            amplifier_found = True
-        else:
-            ret.append(element)
+        Arguments:
+            cam {VideoCapture} -- the camera that captures the video
 
-    return amplifier_found, ret
+        Keyword Arguments:
+            s {int} -- The number of seconds (default: {5})
 
-def getFrames(cam, s=5):
-    """Get all the frames of the cam capture within the number of seconds given
-
-    Arguments:
-        cam {VideoCapture} -- the camera that captures the video
-
-    Keyword Arguments:
-        s {int} -- The number of seconds (default: {5})
-
-    Yields:
-        generator -- every frame
-    """
-    start = time()
-    while (time() - start) < s: # take frames for S seconds
-        _, frame = cam.read()
-        yield frame
+        Yields:
+            generator -- every frame
+        """
+        start = time()
+        while (time() - start) < s: # take frames for S seconds
+            _, frame = cam.read()
+            yield frame
