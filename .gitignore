@@ -8,3 +8,4 @@ checkpoints
 image_test
 logs
 nohup.out
+.vim

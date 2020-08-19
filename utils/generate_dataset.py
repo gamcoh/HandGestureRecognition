@@ -30,14 +30,14 @@ for action in ACTIONS:
         cv2.imwrite(FILENAME, frame)
 
         img = frame.copy()
-        cv2.putText(img, action, (10, 10), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2, cv2.LINE_AA)
-        cv2.imshow(action, img)
+        img = cv2.flip(img, 1)
+        cv2.putText(img, action, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 0), 2, cv2.LINE_AA)
+        cv2.imshow('reflection', img)
 
         keypress = cv2.waitKey(1) & 0xFF
         if keypress == ord("q"):
             cv2.destroyAllWindows()
             break
-        sleep(1)
     sleep(2)
 
 # When everything done, release the capture
