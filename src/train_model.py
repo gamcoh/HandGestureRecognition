@@ -8,9 +8,9 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
-train_generator, val_generator, test_generator = Utils.get_generators(target_size=(165, 210), batch_size=32)
+train_generator, val_generator, test_generator = Utils.get_generators(target_size=(125, 180), batch_size=18)
 
-vgg16 = VGG16(include_top=False, weights="imagenet", input_shape=(165, 210, 3))
+vgg16 = VGG16(include_top=False, weights="imagenet", input_shape=(135, 180, 3))
 
 for layer in vgg16.layers:
     layer.trainable = False
@@ -35,11 +35,11 @@ def check_gen(gen):
         except:
             pass
 
-model.fit_generator(
+model.fit(
     check_gen(train_generator),
-    steps_per_epoch=200,
     epochs=10,
-    validation_data=val_generator,
-    validation_steps=200,
+    steps_per_epoch=87605//32,
+    validation_steps=300,
+    validation_data=check_gen(val_generator),
     callbacks=callbacks
 )
