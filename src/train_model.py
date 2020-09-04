@@ -16,9 +16,9 @@ for layer in vgg16.layers:
     layer.trainable = False
 
 x = GlobalAveragePooling2D()(vgg16.output)
-x = Dense(162, activation='relu')(x)
+x = Dense(64, activation='relu')(x)
 x = Dropout(.5)(x)
-x = Dense(162, activation='relu')(x)
+x = Dense(64, activation='relu')(x)
 x = Dropout(.5)(x)
 x = Dense(11, activation='softmax')(x)
 
@@ -27,7 +27,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 callbacks = [
     TensorBoard(log_dir='../logs', histogram_freq=0, write_images=True, update_freq='batch'),
-    ModelCheckpoint('vgg16_freeze_162x2_img_135_b18.h5', save_best_only=True),
+    ModelCheckpoint('vgg16_freeze_64x2_img_135_b18.h5', save_best_only=True),
     EarlyStopping(patience=5)
 ]
 
@@ -41,7 +41,7 @@ def check_gen(gen):
 
 model.fit(
     check_gen(train_generator),
-    epochs=6,
+    epochs=3,
     steps_per_epoch=87605//32,
     validation_steps=300,
     validation_data=check_gen(val_generator),
