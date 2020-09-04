@@ -26,7 +26,7 @@ for action in ACTIONS:
         # Capture frame-by-frame
         ret, frame = cap.read()
         # save the image to a file in the right folder
-        FILENAME = './image2labellize/'+action+'/'+str(i)+'_'+str(randint(0, 1000))+'_opencv.png'
+        FILENAME = '../image2labellize/'+action+'/'+str(i)+'_'+str(randint(0, 1000))+'_opencv.png'
         cv2.imwrite(FILENAME, frame)
 
         img = frame.copy()

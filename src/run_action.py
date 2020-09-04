@@ -4,11 +4,11 @@ sys.path.append('../utils')
 
 from Utils import Utils
 from time import sleep, time
-from Actions import Actions
+#from Actions import Actions
 from Predictions import Prediction
 
 model = Prediction() # init the trained model for inference
-action = Actions() # init the action class in order to lunch actions based on predictions
+#action = Actions() # init the action class in order to lunch actions based on predictions
 
 while True:
 	sleep(5) # search for predictions every 30 seconds
@@ -25,6 +25,8 @@ while True:
 	# if not we only search for the one most action found and execute it
 	most_common_preds = Utils.top_k(preds, k=2)
 	amplifierFounded, actionsWanted = Utils.hasAmplifier(most_common_preds)
+	print(actionsWanted)
+	continue
 
 	if amplifierFounded:
 		for acc in actionsWanted:
