@@ -26,7 +26,7 @@ model = Model(inputs=vgg16.input, outputs=x)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 callbacks = [
-    #TensorBoard(log_dir='../logs', histogram_freq=0, write_images=True, update_freq='batch'),
+    TensorBoard(log_dir='../logs', histogram_freq=0, write_images=True, update_freq='batch'),
     ModelCheckpoint('vgg16_freeze_162x2_img_135_b18.h5', save_best_only=True),
     EarlyStopping(patience=5)
 ]
@@ -41,7 +41,7 @@ def check_gen(gen):
 
 model.fit(
     check_gen(train_generator),
-    epochs=4,
+    epochs=6,
     steps_per_epoch=87605//32,
     validation_steps=300,
     validation_data=check_gen(val_generator),
