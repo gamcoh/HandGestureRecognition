@@ -41,7 +41,7 @@ def check_gen(gen):
 
 model.fit(
     check_gen(train_generator),
-    epochs=3,
+    epochs=10,
     steps_per_epoch=87605//32,
     validation_steps=300,
     validation_data=check_gen(val_generator),
