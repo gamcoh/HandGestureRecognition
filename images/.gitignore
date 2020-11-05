@@ -1,7 +1,0 @@
-*.jpeg
-*.jpg
-*.png
-!output_vincent/**/*.jpeg
-!output_vincent/**/*.jpg
-!output_vincent/**/*.png
-

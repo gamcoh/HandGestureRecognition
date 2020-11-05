@@ -3,7 +3,6 @@ coverage
 images_test
 __pycache__
 handrecognition_model.h5
-image2labellize
 checkpoints
 image_test
 logs
