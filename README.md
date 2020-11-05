@@ -40,14 +40,14 @@ Then you need to copy all the `action*` folders to `images/all`.
 That way you will have:
 ```
 HandGestureRecognition
-	|
-	| - images
-				|
-				| - all
-						 |
-						 | - action1
-						 | - action2
-						 ...
+  |
+  | - images
+        |
+        | - all
+             |
+             | - action1
+             | - action2
+             ...
 ```
 Now we need to split the dataset in order to have a train, test, and val folder.
 To do that you just need to run the following commands:
